@@ -188,6 +188,62 @@ USER laradock
 RUN echo "" >> ~/.bashrc && \
     echo 'export PATH="/var/www/vendor/bin:$PATH"' >> ~/.bashrc
 
+
+###########################################################################
+USER root
+
+ARG INSTALL_BZ2=false
+ARG INSTALL_GMP=false
+ARG INSTALL_GNUPG=false
+ARG INSTALL_SSH2=false
+ARG INSTALL_SOAP=false
+ARG INSTALL_XSL=false
+ARG PHP_VERSION=${LARADOCK_PHP_VERSION}
+
+RUN set -eux; \
+    ###########################################################################
+    # BZ2:
+    ###########################################################################
+    if [ ${INSTALL_BZ2} = true ]; then \
+      apt-get -yqq install php${LARADOCK_PHP_VERSION}-bz2; \
+    fi; \
+    ###########################################################################
+    # GMP (GNU Multiple Precision):
+    ###########################################################################
+    if [ ${INSTALL_GMP} = true ]; then \
+      # Install the PHP GMP extension
+      apt-get -yqq install php${LARADOCK_PHP_VERSION}-gmp; \
+    fi; \
+    ###########################################################################
+    # GnuPG:
+    ###########################################################################
+    if [ ${INSTALL_GNUPG} = true ]; then \
+        apt-get -yqq install php${LARADOCK_PHP_VERSION}-gnupg; \
+    fi; \
+    ###########################################################################
+    # SSH2:
+    ###########################################################################
+    if [ ${INSTALL_SSH2} = true ]; then \
+      # Install the PHP SSH2 extension
+      apt-get -yqq install libssh2-1-dev php${LARADOCK_PHP_VERSION}-ssh2; \
+    fi; \
+    ###########################################################################
+    # SOAP:
+    ###########################################################################
+    if [ ${INSTALL_SOAP} = true ]; then \
+      # Install the PHP SOAP extension
+      apt-get -yqq install libxml2-dev php${LARADOCK_PHP_VERSION}-soap; \
+    fi; \
+    ###########################################################################
+    # XSL:
+    ###########################################################################
+    if [ ${INSTALL_XSL} = true ]; then \
+      # Install the PHP XSL extension
+      apt-get -yqq install libxslt-dev php${LARADOCK_PHP_VERSION}-xsl; \
+    fi
+
+###########################################################################
+
 ###########################################################################
 # Crontab
 ###########################################################################

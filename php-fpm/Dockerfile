@@ -39,6 +39,8 @@ RUN set -xe; \
     pecl channel-update pecl.php.net && \
     apt-get install -yqq \
       apt-utils \
+	gnupg2 \
+	gnupg \
       #
       #--------------------------------------------------------------------------
       # Mandatory Software's Installation
@@ -319,7 +321,23 @@ RUN if [ ${INSTALL_YAML} = true ]; then \
     fi && \
     docker-php-ext-enable yaml \
 ;fi
+###########################################################################
+# GNUPG:
+###########################################################################
+ARG INSTALL_GNUPG=false
 
+#RUN if [ ${INSTALL_GNUPG} = true ]; then \
+RUN apt-get update; \
+     apt-get -yq install libgpgme-dev; \
+#      if [ $(php -r "echo PHP_MAJOR_VERSION;") = "8" ]; then \
+#        pecl install gnupg-1.5.0RC2; \
+#      else \
+        pecl install gnupg; \
+#      fi; \
+#	docker-php-ext-install gnupg \
+       docker-php-ext-enable gnupg; \
+      php -m | grep -q 'gnupg'; 
+#    fi
 ###########################################################################
 # Install additional locales:
 ###########################################################################
