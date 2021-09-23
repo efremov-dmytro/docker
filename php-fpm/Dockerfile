@@ -388,6 +388,36 @@ RUN set -xe; php -v | head -n 1 | grep -q "PHP ${LARADOCK_PHP_VERSION}."
 COPY ./laravel.ini /usr/local/etc/php/conf.d
 COPY ./xlaravel.pool.conf /usr/local/etc/php-fpm.d/
 
+RUN mkdir -p /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe
+COPY ./eusphpe/cac.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/cac.so
+COPY ./eusphpe/cagui.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/cagui.so
+COPY ./eusphpe/cspb.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/cspb.so
+COPY ./eusphpe/cspe.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/cspe.so
+COPY ./eusphpe/cspib.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/cspib.so
+COPY ./eusphpe/ekc1.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/ekc1.so
+COPY ./eusphpe/ekc1ccid.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/ekc1ccid.so
+COPY ./eusphpe/euscp.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/euscp.so
+COPY ./eusphpe/eusphpe.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/eusphpe.so
+COPY ./eusphpe/km.eka1c.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/km.eka1c.so
+COPY ./eusphpe/km.ekc1.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/km.ekc1.so
+COPY ./eusphpe/km.fs.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/km.fs.so
+COPY ./eusphpe/km.ncmg301.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/km.ncmg301.so
+COPY ./eusphpe/km.pkcs11.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/km.pkcs11.so
+COPY ./eusphpe/km.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/km.so
+COPY ./eusphpe/ldapc.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/ldapc.so
+COPY ./eusphpe/libosi.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/libosi.so
+COPY ./eusphpe/nchcp.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/nchcp.so
+COPY ./eusphpe/ncmg301.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/ncmg301.so
+COPY ./eusphpe/osplm.ini /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/osplm.ini
+COPY ./eusphpe/pkcs11.ncmg301.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/pkcs11.ncmg301.so
+COPY ./eusphpe/pkif.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe/pkif.so
+RUN echo 'LD_LIBRARY_PATH=/usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe' >> /lib/init/init-d-script
+#RUN > /usr/local/etc/php/conf.d/eusphpe.ini
+#RUN echo 'extension=/usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe.so' > /usr/local/etc/php/conf.d/eusphpe.ini
+RUN echo 'LD_LIBRARY_PATH=/usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe' >> /etc/init.d/dbus
+RUN echo 'LD_LIBRARY_PATH=/usr/local/lib/php/extensions/no-debug-non-zts-20180731/eusphpe' >> /etc/init.d/x11-common
+COPY ./eusphpe/eusphpe.ini /usr/local/etc/php/conf.d/eusphpe.ini
+
 USER root
 
 # Clean up
